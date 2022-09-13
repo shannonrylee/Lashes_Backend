@@ -1,4 +1,4 @@
-const { Product, User, Review } = require("../models");
+const { Product, User } = require("../models");
 
 const getProduct = async (req, res) => {
   try {
@@ -8,46 +8,45 @@ const getProduct = async (req, res) => {
     return res.status(500).send(error.message);
   }
 };
-const getReview = async (req, res) => {
+const getProductById = async (req, res) => {
     try {
-      const reviews = await Review.find();
-      return res.status(200).json({ reviews });
+     const productId = await Product.findById(req.params.id)
+     return res.status(200).json(productId)
     } catch (error) {
-      return res.status(500).send(error.message);
+      return res.status(500).send(error.message)
     }
-  };
-  
-  const createReview = async (req, res) => {
+}
+const createProduct = async (req, res) => {
     try {
-      const newReview = await new Review(req.body);
-      await newReview.save();
+      const newProduct = await new Product(req.body);
+      await newProduct.save();
       return res.status(201).json({
-        newReview,
+        newProduct,
       });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
   };
   
-  const updateReview = async (req, res) => {
+  const updateProduct = async (req, res) => {
     try {
-      const review = await Review.findByIdAndUpdate(req.params.id, req.body, {
+      const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
       });
-      res.status(200).json(review);
+      res.status(200).json(product);
     } catch (error) {
       return res.status(500).send(error.message);
     }
   };
   
-  const deleteReview = async (req, res) => {
+  const deleteProduct = async (req, res) => {
     try {
       const { id } = req.params;
-      const deleted = await Review.findByIdAndDelete(id);
+      const deleted = await Product.findByIdAndDelete(id);
       if (deleted) {
-        return res.status(200).send("Review deleted");
+        return res.status(200).send("Product deleted");
       }
-      throw new Error("Review not found");
+      throw new Error("Product not found");
     } catch (error) {
       return res.status(500).send(error.message);
     }
@@ -100,10 +99,10 @@ const getReview = async (req, res) => {
 
 module.exports = {
   getProduct,
-  getReview,
-  createReview,
-  updateReview,
-  deleteReview,
+  getProductById,
+  createProduct,
+  updateProduct,
+  deleteProduct,
   getUser,
   createUser,
   updateUser,
