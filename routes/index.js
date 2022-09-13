@@ -10,16 +10,12 @@ router.get("/product/:id", controllers.getProductById)
 
 router.get("/user", controllers.getUser);
 
-router.get("/review", controllers.getReview);
-
 router.post("/user", controllers.createUser);
-
-router.post("/review", controllers.createReview);
 
 router.post("/user/:id", controllers.updateUser);
 
-router.post("/product/:id", controllers.updateReview);
+router.post("/product/:id", controllers.updateProduct);
 
-router.delete("/product/:id", controllers.deleteReview);
+router.delete("/product/:id", controllers.deleteProduct);
 
 module.exports = router;
